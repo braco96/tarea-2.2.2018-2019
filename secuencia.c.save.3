@@ -1,0 +1,130 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+#include <string.h>
+#include <stdlib.h>
+#include "auxiliar.h"
+int variableentorno ();
+int BuscaCaracter (char *cadena, char caracter);
+int main(int argc, char *argv[]){
+  
+	if(argc>4){ 
+	printf("El número de argumentos no es correcto.");
+	return EX_USAGE;
+}else{
+double hasta,desde,paso,a;
+	if (argc==1){ 
+	hasta=10;
+	desde=1;
+	paso=1;
+}
+if (argc==2){ 
+	if((strcmp(argv[1],"-h") ==0)){ 
+	printf("secuencia: Uso: secuencia [ hasta [ desde [ paso ]]]\n" );
+	printf("secuencia: Genera la secuencia de numeros en el intervalo y paso indicados.\n");
+ 	return EX_OK;
+	}
+	
+	if((strcmp(argv[1], "--help")==0)){
+	printf("secuencia: Uso: secuencia [ hasta [ desde [ paso ]]]\n" );
+	printf("secuencia: Genera la secuencia de numeros en el intervalo y paso indicados. \n");
+	return EX_OK;
+	}
+}else{ 
+	if(BuscaCaracter (argv[1], '-')!=0){  
+	printf("El parámetro \"hasta\" no es un número real válido.");
+	return EX_USAGE;
+
+	}
+else{
+hasta=atof(argv[1]);
+
+desde=1;
+paso=1;}}}
+if (argc==3){ 
+if(BuscaCaracter (argv[1], '-')!=0){  
+	printf("El parámetro \"hasta\" no es un número real válido.");
+	return EX_USAGE;
+}
+if(BuscaCaracter (argv[2], '-')!=0){ 
+	printf("El parámetro \"desde\" no es un número real válido.");
+	return EX_USAGE;
+}
+else{ 
+hasta=atof(argv[1]);
+desde=atof(argv[2]);
+paso=1;}}
+if (argc==4){
+if(BuscaCaracter (argv[1], '-')!=0){  
+	printf("El parámetro \"hasta\" no es un número real válido.");
+	return EX_USAGE;
+}
+if(BuscaCaracter (argv[2], '-')!=0){  
+	printf("El parámetro \"desde\" no es un número real válido.");
+	return EX_USAGE;
+}
+if(BuscaCaracter (argv[3], '-')!=0){  
+	printf("El parámetro \"paso\" no es un número real válido.");
+	return EX_USAGE;
+}
+hasta=atof(argv[1]);
+desde=atof(argv[2]);
+paso=atof(argv[3]);
+if(paso==0){  
+	printf("El parámetro \"paso\" no puede valer 0");
+	return EX_USAGE;
+}
+
+}
+
+a=variableentorno ();
+if(paso>0){
+if(desde<=hasta){ 
+while(desde<=hasta&&a>0){
+printf("\t%g\n",desde);
+desde+=paso;
+a--;}}else{Error(EX_USAGE,"El signo de \"paso\" no permite recorrer el intervalo en el sentido \"desde\" a \"hasta\".");}}
+if(paso<0){
+if(hasta<=desde&&a>0){ 
+while(hasta<=desde){
+printf("\t%g\n",desde);
+desde+=paso;
+a--;}
+}else{Error(EX_USAGE,"El signo de \"paso\" no permite recorrer el intervalo en el sentido \"desde\" a \"hasta\".");}}
+if(a==0){ 
+Error(EX_NOPERM,"Se intentó superar el límite de salida establecido por MAX OUTPUT.");
+
+}
+
+return EX_OK;}
+
+
+
+
+}
+   int variableentorno (){ 
+       int a;
+        char* s =getenv("MAX_OUTPUT");
+         char *endp;
+
+       if((s)==NULL || strcmp(s, "") == 0 ||(strtol(s, &endp,10) < 0 ||*endp !=0)){
+          
+		a=100;
+	} else
+		a = strtol(s, &endp, 10);	
+      
+return a;
+}
+        
+
+
+
+     int BuscaCaracter (char *cadena, char caracter)
+{ int contador=0;
+int i=1;
+        while ( cadena[i] != '\0' ) { 
+if ( cadena[i] == caracter ) { contador=1; } 
+i++;
+    }
+return contador;
+}
